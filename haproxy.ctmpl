@@ -1,0 +1,14 @@
+global
+    daemon
+    maxconn {{key "service/haproxy/maxconn"}}
+
+defaults
+    mode {{key "service/haproxy/mode"}}{{range ls "service/haproxy/timeouts"}}
+    timeout {{.Key}} {{.Value}}{{end}}
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+listen http-in
+    bind *:80{{range service "tomcat"}}
+    server {{.Node}}{{.Port}} {{.Address}}:{{.Port}}{{end}}
