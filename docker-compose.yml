@@ -2,7 +2,6 @@
 # Service Discovery - Consul
 #
 consul:
-  #restart: always
   command: -server -bootstrap -advertise 10.0.0.100 -ui-dir /ui
   image: progrium/consul:latest
   ports:
@@ -16,7 +15,6 @@ consul:
 # Service Discovery - Registrator
 #
 registrator:
- # restart: always
   command: -ip=10.0.0.100 consul://consul:8500 -e SERVICE_IGNORE=always
   image: gliderlabs/registrator:v4
   links:
